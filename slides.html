@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .slide-container {
+    width: 100%;
+    max-width: 900px;
+  }
+  .slide {
+    display: none;
+    background: #16213e;
+    border-radius: 16px;
+    padding: 40px;
+    min-height: 500px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .slide.active { display: block; }
+  .slide-title {
+    color: #7ec8e3;
+    font-size: 2.2rem;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(126,200,227,0.5);
+    margin-bottom: 30px;
+  }
+  .intro-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .photo-placeholder {
+    width: 220px;
+    height: 280px;
+    background: #2a2a4a;
+    border: 3px dashed #7ec8e3;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7ec8e3;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 15px;
+    flex-shrink: 0;
+  }
+  .fact-box {
+    background: #4a90d9;
+    color: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 380px;
+  }
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .quiz-option {
+    border-radius: 12px;
+    padding: 25px 15px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .opt-blue { background: #3498db; }
+  .opt-purple { background: #9b59b6; }
+  .opt-green { background: #2ecc71; }
+  .opt-pink { background: #e91e8c; }
+  .emoji-large { font-size: 2rem; }
+  .question-prompt {
+    text-align: center;
+    color: #f4d03f;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .reveal-slide {
+    text-align: center;
+  }
+  .reveal-banner {
+    background: linear-gradient(90deg, #f4d03f, #f39c12);
+    color: #1a1a2e;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+  }
+  .reveal-answer {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    margin: 20px 0;
+  }
+  .reveal-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .reveal-detail {
+    color: #b8c9e8;
+    font-size: 1.1rem;
+    max-width: 350px;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+  button {
+    background: #4a90d9;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover { background: #357abd; }
+  button:disabled { background: #555; cursor: not-allowed; }
+  .slide-counter {
+    text-align: center;
+    color: #7ec8e3;
+    margin-top: 15px;
+    font-size: 0.9rem;
+  }
+  .flag-emoji { font-size: 2.5rem; }
+  .country-name { font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1: TITLE / INSTRUCTIONS -->
+  <div class="slide active">
+    <div class="slide-title">Get To Know Me :)</div>
+    <div style="text-align:center; color:#b8c9e8; font-size:1.1rem; max-width:600px; margin:0 auto 30px;">
+      Instead of just telling you about myself... we're going to play a game!
+      <br><br>
+      When I show you 4 answers, talk with your group and decide which one you think is true!
+      <br><br>
+      When I say <strong style="color:#f4d03f;">"GO!"</strong> — point to (or hold up) your answer!
+    </div>
+    <div style="display:flex; justify-content:center; gap:15px; margin-top:30px;">
+      <div style="width:60px;height:60px;background:#3498db;border-radius:8px;"></div>
+      <div style="width:60px;height:60px;background:#9b59b6;border-radius:8px;"></div>
+      <div style="width:60px;height:60px;background:#2ecc71;border-radius:8px;"></div>
+      <div style="width:60px;height:60px;background:#e91e8c;border-radius:8px;"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: INTRODUCTION -->
+  <div class="slide">
+    <div class="slide-title">Introduction of Myself</div>
+    <div class="intro-layout">
+      <div class="photo-placeholder">
+        <img src="teacher-photo.png" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+      </div>
+      <div class="fact-box">
+        Hi everyone! 👋<br><br>
+        My name is <strong>Miss Gani</strong>!<br><br>
+        I am so excited to be your English teacher this year!
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Q1 QUESTION -->
+  <div class="slide">
+    <div class="slide-title">Question 1 🤔</div>
+    <div class="question-prompt">What is my favorite color?</div>
+    <div class="quiz-grid">
+      <div class="quiz-option opt-blue"><span class="emoji-large">🔵</span>BLUE</div>
+      <div class="quiz-option opt-purple"><span class="emoji-large">🟣</span>PURPLE</div>
+      <div class="quiz-option opt-green"><span class="emoji-large">🟢</span>GREEN</div>
+      <div class="quiz-option opt-pink"><span class="emoji-large">🩷</span>PINK</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Q1 REVEAL -->
+  <div class="slide reveal-slide">
+    <div class="reveal-banner">🎉 CORRECT ANSWER! 🎉</div>
+    <div class="reveal-layout">
+      <div class="photo-placeholder" style="width:180px;height:180px;">
+        <img src="purple-photo.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+      </div>
+      <div>
+        <div class="reveal-answer" style="color:#9b59b6;">PURPLE 🟣</div>
+        <div class="reveal-detail">
+          My favorite color is purple! I love it so much I wear it a lot!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Q2 QUESTION -->
+  <div class="slide">
+    <div class="slide-title">Question 2 🤔</div>
+    <div class="question-prompt">What is my favorite food?</div>
+    <div class="quiz-grid">
+      <div class="quiz-option opt-blue"><span class="emoji-large">🍕</span>PIZZA</div>
+      <div class="quiz-option opt-purple"><span class="emoji-large">🍚</span>RICE & CHICKEN</div>
+      <div class="quiz-option opt-green"><span class="emoji-large">🍝</span>PASTA</div>
+      <div class="quiz-option opt-pink"><span class="emoji-large">🍔</span>BURGER</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Q2 REVEAL -->
+  <div class="slide reveal-slide">
+    <div class="reveal-banner">🎉 CORRECT ANSWER! 🎉</div>
+    <div class="reveal-layout">
+      <div class="photo-placeholder" style="width:180px;height:180px;">
+        <img src="food-photo.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+      </div>
+      <div>
+        <div class="reveal-answer" style="color:#4a90d9; font-size:1.8rem;">RICE & CHICKEN</div>
+        <div class="reveal-detail">
+          My favorite food is rice and chicken! I could eat it every single day!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Q3 QUESTION -->
+  <div class="slide">
+    <div class="slide-title">Question 3 🤔</div>
+    <div class="question-prompt">What does Miss Gani like to do in her spare time?</div>
+    <div class="quiz-grid">
+      <div class="quiz-option opt-blue"><span class="emoji-large">📚</span>READING</div>
+      <div class="quiz-option opt-purple"><span class="emoji-large">👩‍🍳</span>COOKING</div>
+      <div class="quiz-option opt-green"><span class="emoji-large">⚽</span>SPORTS</div>
+      <div class="quiz-option opt-pink"><span class="emoji-large">🏊</span>SWIMMING</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Q3 REVEAL -->
+  <div class="slide reveal-slide">
+    <div class="reveal-banner">🎉 CORRECT ANSWER! 🎉</div>
+    <div class="reveal-layout">
+      <div class="photo-placeholder" style="width:180px;height:180px;">
+        <img src="cooking-photo.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+      </div>
+      <div>
+        <div class="reveal-answer" style="color:#9b59b6; font-size:1.8rem;">COOKING 👩‍🍳</div>
+        <div class="reveal-detail">
+          I love to cook! I try new recipes and enjoy making meals for my family and friends.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Q4 QUESTION -->
+  <div class="slide">
+    <div class="slide-title">Question 4 🌍</div>
+    <div class="question-prompt">Where is Miss Gani from?</div>
+    <div class="quiz-grid">
+      <div class="quiz-option opt-blue"><span class="flag-emoji">🇳🇬</span><span class="country-name">Nigeria</span></div>
+      <div class="quiz-option opt-purple"><span class="flag-emoji">🇬🇭</span><span class="country-name">Ghana</span></div>
+      <div class="quiz-option opt-green"><span class="flag-emoji">🇰🇪</span><span class="country-name">Kenya</span></div>
+      <div class="quiz-option opt-pink"><span class="flag-emoji">🇿🇦</span><span class="country-name">South Africa</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Q4 REVEAL -->
+  <div class="slide reveal-slide">
+    <div class="reveal-banner">🎉 CORRECT ANSWER! 🎉</div>
+    <div class="reveal-layout">
+      <div style="font-size:5rem;"><img src="nigeria-flag.png" style="width:150px; height:100px; object-fit:cover; border-radius:8px;"></div>
+      <div>
+        <div class="reveal-answer" style="color:#3498db; font-size:1.8rem;">I'M FROM NIGERIA!</div>
+        <div class="reveal-detail">
+          I'm Nigerian! 😊 One day we'll learn about different countries and cultures together!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+    <button id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+  </div>
+  <div class="slide-counter" id="counter">Slide 1 of 10</div>
+
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    document.getElementById('counter').innerText = `Slide ${index + 1} of ${total}`;
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === total - 1;
+  }
+
+  function changeSlide(dir) {
+    current += dir;
+    if (current < 0) current = 0;
+    if (current >= total) current = total - 1;
+    showSlide(current);
+  }
+
+  showSlide(0);
+</script>
+
+</body>
+</html>
